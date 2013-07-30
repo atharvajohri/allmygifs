@@ -1,14 +1,16 @@
 package com.gifs.core
 
+import com.gifs.secure.SecUser
+
 class Gif {
 
 	String link
 	Date dateCreated
 	String title
-	User addedBy
+	SecUser addedBy
 	
 	static hasMany = [popularityCounts: Popularity, tags: Tag]
-	static belongsTo = User
+	static belongsTo = SecUser
 	static enabled = true
 	
     static constraints = {

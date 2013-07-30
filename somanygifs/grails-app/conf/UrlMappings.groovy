@@ -7,7 +7,8 @@ class UrlMappings {
 			}
 		}
 
-		"/"(controller:"gif", action:"index")//(view:"/index")
+		"/"(controller:"gif", action:"home")//(view:"/index")
+		"/add"(controller:"gif", action:"add")//(view:"/index")
 		"500"(view:'/error')
 	}
 }

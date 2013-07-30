@@ -1,9 +1,11 @@
 package com.gifs.core
 
+import com.gifs.secure.SecUser
+
 class Tag {
 
 	String title
-	User addedBy
+	SecUser addedBy
 	Date dateCreated
 	Boolean enabled = true
 	

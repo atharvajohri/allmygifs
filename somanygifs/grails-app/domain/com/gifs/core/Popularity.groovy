@@ -1,9 +1,11 @@
 package com.gifs.core
 
+import com.gifs.secure.SecUser
+
 class Popularity {
 
 	Date dateCreated
-	User popularizedBy
+	SecUser popularizedBy
 	
     static constraints = {
     }
