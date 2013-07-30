@@ -10,10 +10,10 @@
 			<g:form controller="gif" action="addGif">
 				<table id="add-gif-table">
 					<tr>
-						<td>Title:</td><td><g:textField name="link"/></td>
+						<td>Title:</td><td><g:textField name="title" class="text-fields"/></td>
 					</tr>
 					<tr>
-						<td>Link:</td><td><g:textField name="title"/></td>
+						<td>Link:</td><td><g:textField name="link" class="text-fields"/></td>
 					</tr>
 					<tr>
 						<td colspan=2 align="center">

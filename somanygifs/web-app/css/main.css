@@ -1,20 +1,22 @@
-/*here begins the styles for the app*/
+/*and now begins the styles for the app*/
 body {padding:0;margin:0;margin-top:20px}
+
 a:link {color:#3299CC;text-decoration: none;}      /* unvisited link */
 a:visited {color:#3299CC;}  /* visited link */
 a:hover {color:#3299CC;}  /* mouse over link */
 a:active {color:#3299CC;}  /* selected link */
 
 .containers {padding:10px 5px;}
-.smallerText60 {font-size:60%}
+.smaller-text-60 {font-size:60%}
+.text-fields {border:1px solid #dedede}
 .page-titles {font-size:15px;font-weight:bold;margin:10px 0px;}
-#main-container {color:#7a7a7a;background:#ededed;font-family:"arial";font-size:15px;width:758px;margin:auto;position:relative}
-	#server-message-container {position:absolute;background:#e5e5e5	;padding:5px 10px;font-size:12px;min-width:120px;text-align:center;}
-	#header-container{background:#fff;border-bottom:1px solid #dedede;overflow:auto;}
+#main-container {color:#7a7a7a;background:#f5f5f5;font-family:"arial";font-size:15px;width:758px;margin:auto;position:relative}
+	#server-message-container {position:absolute;background:#e5e5e5;padding:5px 10px;font-size:12px;min-width:300px;opacity:0.8;text-align:center;}
+	#header-container{background:#fff;overflow:auto;}
 		#logo-container {font-size:35px;font-family:"Trebuchet MS", "arial", "sans-serif";float:left;}
 		#header-options-container {float:right;}
 			.header-options {float:left;padding:10px;background:#3299CC;color:#fff;font-weight:bold;cursor:pointer;opacity:0.7;border-radius:5px;min-width:60px;text-align:center;margin-left:10px}
-			.header-options:hover {cursor:pointer;opacity:1.0}
-			.header-options-selected {opcity:1.0}
-	#body-container {height:650px;overflow:auto}
-	#footer-container{font-size:12px;border-top:1px solid #dedede}
+			.header-options:hover {cursor:pointer;opacity:1.0;}
+			.header-options-selected {opacity:1.0;}
+	#body-container {height:600px;overflow:auto}
+	#footer-container{font-size:12px;border-top:1px solid #dedede;margin:10px 20px;}

@@ -23,11 +23,11 @@
 			</g:if>
 			<div id="header-container" class="containers">
 				<div id="logo-container">
-					<b>GIF</b><span class="smallerText60">book</span>
+					<b>GIF</b><span class="smaller-text-60">book</span>
 				</div>
 				<div id="header-options-container">
 					<g:link controller="gif" action="home">
-						<div id="header-option-browse" class="header-options">
+						<div class="login-triggers header-options" id="header-option-browse">
 							Browse
 						</div>
 					</g:link>

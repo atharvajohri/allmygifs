@@ -6,7 +6,13 @@
 	</head>
 	<body>
 		<div id="gifs-container">
-			
-		</div>	
+			<div id="gif-viewport">
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				initializeGifLoader("${createLink(controller:'gif', action:'getGif')}");
+			});
+		</script>	
 	</body>
 </html>

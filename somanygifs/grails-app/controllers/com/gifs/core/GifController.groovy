@@ -2,6 +2,7 @@ package com.gifs.core
 
 import groovy.json.JsonSlurper
 import org.codehaus.groovy.grails.web.json.JSONObject
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 
@@ -10,6 +11,7 @@ class GifController {
 	def utilService
 	def secUserService
 	def springSecurityService
+	def gifService
 	
 	def beforeInterceptor = {
 		if (params.signed_request){
@@ -24,6 +26,27 @@ class GifController {
 	}
 	
 	def home(){
+	}
+	
+	def getGif(){
+		log.info "request for gifs..."
+		params.type = params.type ?: "JSON"
+		
+		if (params.type.equalsIgnoreCase("JSON")){
+			def returnData = [:]
+			params.size = Integer.parseInt(params.size.toString()) ?: 3
+			params.offset = Integer.parseInt(params.offset.toString()) ?: 0
+			
+			returnData.gifPackage = gifService.obtainGifPackage(params.size, params.offset) as JSON
+			returnData.offset = params.offset + params.size
+			
+			render returnData as JSON
+		}else if(params.type.equalsIgnoreCase("HTML")){
+			render template: "gifHtmlTemplate", model: [gif: Gif.get(Long.parseLong(params.id.toString()))]
+		}else{
+			
+			//todo for other formats
+		}
 	}
 	
 	def add(){

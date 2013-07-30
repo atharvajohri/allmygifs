@@ -14,5 +14,11 @@ class Gif {
 	static enabled = true
 	
     static constraints = {
+		link nullable:false, blank:false
+		title nullable:false, blank:false
     }
+	
+	static mapping = {
+		sort dateCreated:"desc"
+	}
 }
