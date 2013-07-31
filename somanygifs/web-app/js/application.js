@@ -1,7 +1,7 @@
 function GifListManager(gifs){
 	var self = this;
 	self.gifs = gifs;
-	self.currentGif;
+	self.currentGif = null;
 	var gifLoadBuffer = [];
 	
 	self.loadGifs = function(loadCompleteCallback){
@@ -30,9 +30,21 @@ function GifListManager(gifs){
 				}
 			);
 		}else{
-			//all loaded
+			//all data loaded
+			self.loadGifImages();
 			if (!gifLoadBuffer.length && loadCompleteCallback)
 				loadCompleteCallback();
+		}
+	}
+	
+	self.loadGifImages = function(){
+		for (i in gifs){
+			$('<img/>', {
+				'src': gifs[i].gifData.link, // url
+				'load': function(){
+					console.log (this.src + " has been loaded");
+				}
+		    });
 		}
 	}
 	
@@ -81,19 +93,18 @@ function centerAbsoluteElements(){
 function Gif(gifData, html){
 	this.gifData = gifData;
 	this.html = html;
+	this.viewed = false;
+	this.gifLoaded = false;
 }
 
 function showNextGif(){
-	console.log (gifBuffer)
+	console.log ("shwing next..")
 	
-//	asyncLoader(
-//		
-//	)
 }
 
 var gifListManager, offset = 0;
 
-function initializeGifLoader(url, count){
+function getNextGifPackage(url, count, loadCompleteCallback){
 	asyncLoader(
 		url ? url : "/gif/getGif", 
 		"GET", 
@@ -103,16 +114,50 @@ function initializeGifLoader(url, count){
 			offset = response.offset;
 			var gifBuffer = [];
 			for (i in gifsObject){
-				gifBuffer.push(new Gif(gifsObject[i], false) );
+				gifBuffer.push(new Gif(gifsObject[i], null) );
 			}
 			gifListManager = new GifListManager(gifBuffer);
-			gifListManager.loadGifs();
+			gifListManager.loadGifs(loadCompleteCallback);
 			
 		}, function(data){
 			console.log("error: ")
 			console.log(data);
 		}
 	);
+}
+
+function initializeGifLoader(url, count){
+	getNextGifPackage(url, count, function(){
+		showNextGif();
+		initializeKeyEvents();
+	});
+}
+
+var tab = false;
+
+function initializeKeyEvents(){
+	$(document).keydown(function(e){
+		if (e.keyCode == 9 && e.shiftKey){
+			e.preventDefault();
+			e.stopPropagation();
+			if (!tab){
+				console.log("sh tab")
+				tab = true;
+			}
+		} else if (e.keyCode == 9){
+			e.preventDefault();
+			e.stopPropagation();
+			if (!tab){
+				console.log("tab tab")
+				tab = true;
+			}
+		}
+	});
+	$(document).keyup(function(e){
+		if (tab)
+			tab = false
+	});
+	console.log("keys init")
 }
 
 function asyncLoader(url, type, data, successCallback, errorCallback){
