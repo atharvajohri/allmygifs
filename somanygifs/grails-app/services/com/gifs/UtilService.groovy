@@ -17,5 +17,5 @@ class UtilService {
 			(1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
 		}
 	}
-	  
+	
 }

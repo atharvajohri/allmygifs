@@ -2,6 +2,7 @@ package com.gifs.secure
 
 import com.gifs.core.Gif
 import com.gifs.core.Tag
+import com.gifs.core.PopularityCount
 import java.util.Date;
 
 class SecUser {
@@ -17,7 +18,7 @@ class SecUser {
 	boolean passwordExpired
 	Date dateCreated
 	
-	static hasMany = [addedGifs: Gif, addedTags: Tag, likedGifs: Gif]
+	static hasMany = [addedGifs: Gif, addedTags: Tag, popularityCounts: PopularityCount]
 
 	static constraints = {
 		username blank: false, unique: true

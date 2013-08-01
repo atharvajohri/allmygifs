@@ -16,6 +16,7 @@ class SecUserService {
 			}else{
 				log.info "Logging in $fbId"
 				springSecurityService.reauthenticate(user.username)
+				log.info "logged in user: ${springSecurityService.getCurrentUser()}"
 			}
 		}else{
 			log.info "User $user.username is already logged in.." 
@@ -34,5 +35,16 @@ class SecUserService {
 				springSecurityService.reauthenticate(newUser.username)
 			}
 		}
+	}
+	
+	def isGifPopularizedByUser(gif, user){
+		def popularityCount = null;
+		user.popularityCounts.each{ pc ->
+			if (pc.popularizedGif == gif){
+				popularityCount = true;
+				return;
+			}
+		}
+		return popularityCount;
 	}
 }
