@@ -67,6 +67,7 @@ class GifController {
 				user.addToPopularityCounts(popularityCount)
 				likedGif.addToPopularityCounts(popularityCount)
 				
+				returnData.updateAction = "unlike"
 				returnData.success = true
 				returnData.gifLikes = likedGif.popularityCounts.size()
 				returnData.gifId = likedGif.id
@@ -101,6 +102,7 @@ class GifController {
 			
 			
 			returnData.success = true
+			returnData.updateAction = "like"
 			returnData.gifLikes = unlikedGif.popularityCounts.size()
 			returnData.gifId = unlikedGif.id
 			log.info "gif ${unlikedGif.id} liked successfully by ${user.id} \n users likes are ${user.popularityCounts}"

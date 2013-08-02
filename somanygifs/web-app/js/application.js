@@ -88,11 +88,6 @@ function GifListManager(gifs){
 		}
 	}
 	
-	/* this function ensures that all gifs are loaded 1 by 1. 
-	 * multiple requests are not sent to retrieve gifs, so each
-	 * one is retrieved faster. 
-	 * multiple requests can only be sent if user asks for next.
-	 */
 	self.loadGifImages = function(index){
 		var found = false;
 		for (var i in gifs){
@@ -113,8 +108,12 @@ function GifListManager(gifs){
 			    });
 			}
 		}
-		
-		
+/*Following is to load gifs synchronously */	
+/* this function ensures that all gifs are loaded 1 by 1. 
+ * multiple requests are not sent to retrieve gifs, so each
+ * one is retrieved faster. 
+ * multiple requests can only be sent if user asks for next.
+ */
 //		if (!index)
 //			index = 0;
 //		for (i in gifs){
@@ -200,11 +199,13 @@ function showNextGif(prev, firstLoad){
 		position1 = positionBot;
 		position2 = positionTop;
 	}
+	currentGif.viewed = true;
 	initializeKeyEvents(false);
 	$("#gif-viewport").animate({"top":position1}, 200, "linear", function(){
 		$("#gif-viewport").html(currentGif.html);
 		$("#gif-viewport").css({"top":position2});
 		$("#gif-viewport").animate({"top":"0px"}, 200, "linear", function(){
+			$("#input-catcher").focus();
 			initializeKeyEvents(true);
 		});
 	});	
@@ -258,14 +259,14 @@ function initializeKeyEvents(turnOn){
 		//capture key events
 		$("#input-catcher, #gifs-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
-			if (e.keyCode == 9 && e.shiftKey){
+			if (e.keyCode == 38 ||(e.keyCode == 9 && e.shiftKey)){
 				e.preventDefault();
 				e.stopPropagation();
 				if (!tab){
 					tab = true;
 					showNextGif(true);
 				}
-			} else if (e.keyCode == 9){
+			} else if (e.keyCode == 9 || e.keyCode == 40){
 				e.preventDefault();
 				e.stopPropagation();
 				if (!tab){
@@ -307,7 +308,7 @@ function initializeKeyEvents(turnOn){
 	}else{
 		$("#input-catcher, #gifs-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
-			if (e.keyCode == 9 || (e.keyCode == 9 && e.shiftKey)){
+			if (e.keyCode == 9 || (e.keyCode == 9 && e.shiftKey) || e.keyCode == 38 || e.keyCode == 40){
 				e.preventDefault();
 				e.stopPropagation();
 			}
@@ -326,9 +327,15 @@ function handleLikeAction(xhr){
 	if (xhr.status == 401){
 		redirectToLogin();
 	}else if (xhr.status == 200){
-		var response = xhr.responseText;
-		console.log(response.success)
-		
+		var response = $.parseJSON(xhr.responseText);
+		console.log(response)
+		if (response.success){
+			$("#gif-"+response.gifId+" .gif-likes-count").html(response.gifLikes + (response.gifLikes == 1 ? " like" : " likes"));
+			$(".like-unlike-button").addClass("hide");
+			$("#gif-"+response.gifId+" ."+response.updateAction+"-button").removeClass("hide");
+		}else{
+			//show message here
+		}
 	}
 }
 

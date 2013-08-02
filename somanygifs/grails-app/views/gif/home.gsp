@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<div id="gifs-container">
-			<g:textField name="input-catcher" id="input-catcher" style="position:absolute;top:-100px"/>
+			<g:textField name="input-catcher" id="input-catcher" style="position:absolute;top:-100px;z-index:100"/>
 			<div id="gif-viewport">
 			</div>
 			<div id="gif-navigator">

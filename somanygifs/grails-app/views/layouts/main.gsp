@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="GIFbook"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
+		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<g:javascript library="jquery" plugin="jquery"></g:javascript>
 		<g:javascript library="application"/>
@@ -21,9 +21,9 @@
 					${message }
 				</div>
 			</g:if>
-			<div id="header-container" class="containers">
+			<div id="header-container">
 				<div id="logo-container">
-					<b>GIF</b><span class="smaller-text-60">book</span>
+					<img src="${resource(dir:'images', file:'gb-logo.png') }" />
 				</div>
 				<div id="header-options-container">
 					<g:link controller="gif" action="home">
@@ -45,7 +45,7 @@
 					</sec:ifNotLoggedIn>
 				</div>	
 			</div>
-			<div id="body-container" class="containers">
+			<div id="body-container">
 				<g:layoutBody/>
 			</div>
 			<div id="footer-container" class="containers">

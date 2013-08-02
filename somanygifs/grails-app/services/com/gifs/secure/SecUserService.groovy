@@ -41,7 +41,7 @@ class SecUserService {
 		def popularityCount = null;
 		user.popularityCounts.each{ pc ->
 			if (pc.popularizedGif == gif){
-				popularityCount = true;
+				popularityCount = pc;
 				return;
 			}
 		}
