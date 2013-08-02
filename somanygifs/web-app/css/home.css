@@ -1,7 +1,7 @@
 /* style for home */
 
 /* gif port styles */
-#gifs-container {overflow:hidden;position:relative;width:550px;height:450px;border-right:1px solid #dedede;}
+#gifs-container {overflow:hidden;position:relative;width:720px;height:550px;border-right:1px solid #dedede;}
 	#gif-navigator {position:absolute;right:30px;top:150px;}
 		.gif-navigators {padding:5px 10px;border-radius:10px;border:1px solid #dedede;margin:5px;background:#fff;cursor:pointer}
 		.gif-navigators img {width:30px;opacity:0.7;}
@@ -9,9 +9,9 @@
 	#gif-viewport {overflow:hidden;position:relative;display:inline-block}
 		.gif-container {padding:5px 10px;}
 			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a}
-			.gif-content-container {width:400px;}
+			.gif-content-container {width:600px;}
 				.gif-image-container {min-height:300px;}
-					.gif-image {background:#fff;width:100%;border-left:5px solid #dedede;}
+					.gif-image {background:#fff;width:100%;border-left:5px solid #dedede;	}
 			.gif-info-container {font-size:15px;padding:5px 0px;overflow:auto;}
 
 

@@ -1,5 +1,5 @@
 /*and now begins the styles for the app*/
-body {padding:0;margin:0;margin-top:20px}
+body {padding:0;margin:0;}
 
 a:link {color:#3299CC;text-decoration: none;} /* unvisited link */
 a:visited {color:#3299CC;}  /* visited link */
@@ -7,6 +7,15 @@ a:hover {color:#3299CC;}  /* mouse over link */
 a:active {color:#3299CC;}  /* selected link */
 
 .containers {padding:10px 5px;}
+.popups {position:fixed;box-shadow:0px 0px 20px 0px #555;border-radius:5px;background:#7a7a7a;z-index:12;width:350px;text-align:center;padding:15px;display:none;}
+
+.close-popup {position:absolute;right:-7px;top:-7px;width:20px;height:20px;border-radius:40px;background:#222;color:#fafafa;font-weight:bold;font-family:arial;font-size:12px;line-height:20px;cursor:pointer;}
+.tip-box {font-family:arial;color:#fff;text-align:center;width:300px;margin:5px auto;position:relative}
+.message-to-tip {font-weight:bold;float:left;font-size:13px;}
+.tip-text {font-size:8px;position:relative;float:left;cursor:pointer;color:#222;margin:3px;top:-5px;font-weight:bold;cursor:pointer;}
+.tip-content {position: absolute;background: black;color: #fff;font-size: 10px;padding: 5px;border-radius: 5px;left: 275px;width: 300px;text-align: left;top: 13px;display:none}
+
+#main-overlay {position:fixed;top:0px;left:0px;width:100%;height:100%;background:#fafafa;opacity:0.7;z-index:10;display:none;}
 
 .smaller-text-60 {font-size:60%}
 .smaller-text-80 {font-size:80%}
@@ -19,17 +28,19 @@ a:active {color:#3299CC;}  /* selected link */
 .floatR {float:right}
 .floatL {float:left}
 
-#main-container {color:#7a7a7a;font-family:"arial";font-size:15px;width:758px;margin:auto;position:relative}
-	#server-message-container {position:absolute;background:#7a7a7a;padding:5px 10px;font-size:12px;min-width:300px;opacity:0.8;text-align:center;color:#e5e5e5}
-	#header-container{background:#fff;overflow:auto;}
-		#logo-container {font-family:"Trebuchet MS", "arial", "sans-serif";float:left;}
-		#logo-container img {height:70px}
-		#header-options-container {float:right;visibility:hidden}
-			.header-options {float:left;padding:10px;background:#3299CC;color:#fff;font-weight:bold;cursor:pointer;opacity:0.7;border-radius:5px;min-width:60px;text-align:center;margin-left:10px}
+.limit-width {width:760px;margin-left:auto !important;margin-right:auto !important;}
+
+#main-container {color:#7a7a7a;font-family:"arial";font-size:15px;margin:auto;position:relative}
+	#server-message-container {position:absolute;background:#fafafa;padding:5px 10px;font-size:12px;min-width:300px;opacity:0.8;text-align:center;color:#7a7a7a;margin-top:5px;border-radius:5px;}
+	#header-container{overflow:auto;background:#3299CC;box-shadow:0px 0px 25px 0px #3299CC;}
+		#logo-container {font-family:levibrush, "arial", "sans-serif";float:left;color:#fff}
+		#logo-container img {height:60px; margin-top:5px;cursor:pointer;}
+		#header-options-container {float:right;margin-top:17px;}
+			.header-options {float:left;padding:10px;background:#391249;color:#fff;font-weight:bold;cursor:pointer;opacity:0.7;border-radius:5px;min-width:60px;text-align:center;margin-left:10px}
 			.header-options:hover {cursor:pointer;opacity:1.0;}
 			.header-options-selected {opacity:1.0;}
-	#body-container {overflow:auto}
-	#footer-container{font-size:12px;border-top:1px solid #dedede;margin:10px 20px;}
+	#body-container {overflow-y:auto;width:700px;;margin-top:20px;min-height:500px;overflow-x:hidden}
+	#footer-container{font-size:12px;border-top:1px solid #dedede;margin:10px 20px;position:fixed;bottom:0px;}
 
 .user-thumb {width:40px}
 .user-name-container {max-width:250px;overflow:hidden;text-overflow:ellipses;white-space: nowrap; padding-left:10px;}

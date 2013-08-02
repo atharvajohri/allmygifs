@@ -52,7 +52,7 @@ class GifController {
 	
 	@Secured(['ROLE_ADMIN'])
 	def add(){
-		[message: flash.message]
+		request.message = flash.message ?: null
 	}
 	
 	@Secured(['IS_AUTHENTICATED_FULLY'])

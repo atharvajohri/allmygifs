@@ -4,6 +4,7 @@ class SecUserService {
 
 	def springSecurityService
 	def utilService
+	def facebookGraphService
 	
 	//login a user with a facebook id, if not found, will automatically create unless "dontcreate" is true
     def loginUser(fbId, dontCreate) {
@@ -31,6 +32,9 @@ class SecUserService {
 			if (newUser.save(flush:true)){
 				//user created successfully
 				SecUserSecRole.create newUser, SecRole.findByAuthority('ROLE_USER')
+				def fbName = facebookGraphService.getFacebookProfile().name
+				if (fbName)
+					newUser.name = fbName 
 				log.info "Created a new user $newUser.username"
 				springSecurityService.reauthenticate(newUser.username)
 			}

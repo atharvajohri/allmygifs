@@ -102,3 +102,7 @@ grails.plugins.springsecurity.authority.className = 'com.gifs.secure.SecRole'
 //grails.plugins.springsecurity.secureChannel.definition = [
 //	'*':         'REQUIRES_SECURE_CHANNEL',
 // ]
+
+//fb app settings
+facebook.applicationSecret='b27b88bac94a38b9735f281c3b567ded'
+facebook.applicationId='278084448996790'

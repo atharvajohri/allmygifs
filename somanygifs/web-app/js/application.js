@@ -3,23 +3,86 @@ if (typeof jQuery !== 'undefined') {
 		$(document).ready(function(){
 			centerAbsoluteElements();
 			autoHideMessages();
+			setupTipboxEvents();
+			setupFooter();
 			$(".login-triggers").click(function(e){
 				var ele_id = $(this).attr("id");
 				redirectToLogin(ele_id);
-			})
+			});
 		});
 	})(jQuery);
 }
 
+function setupFooter(){
+	var width = $(window).width() - 100;
+	$("#footer-container").css("width",width+"px");
+}
+
+function setupTipboxEvents(){
+	$(".tip-text").hover(
+		function(){
+			$(this).parent().find(".tip-content").css("display","block");
+		},
+		function(){
+			$(this).parent().find(".tip-content").css("display","none");
+		}
+	);
+}
+
+var fb_redirect_url;
+
+function facebookLoginCallback(){
+	FB.getLoginStatus(function(response) {
+		if (response.status === 'connected') {
+			// logged in and connected user, someone you know
+			window.location ="/facebookLogin?redirect_to="+fb_redirect_url;
+		}
+	});
+}
+
+function centerAbsoluteElements(){
+	$(".centered-elements").each(function(){
+		var ele = $(this);
+		var parent = $(this).parent();
+		var left = (parent.width() - ele.width())/2;
+		var cssOptions = {};
+		cssOptions.left = left + "px";
+		if (ele.hasClass("popups")){ //vertically center popups
+			var totalHt = $(window).height();
+			var marTop = totalHt/5 + "px";
+			cssOptions["margin-top"] = marTop;
+		}
+		ele.css(cssOptions);
+	});
+}
+
+function openPopup(element){
+	$("#main-overlay").fadeIn(200, function(){
+		element.fadeIn(200);
+		element.find(".close-popup").click(function(){
+			element.fadeOut(200);
+			$("#main-overlay").fadeOut(200);
+		});
+	});
+}
+
+function showFbLogin(){
+	openPopup($("#fb-login"));
+}
+
 function redirectToLogin(ele_id){
-	var redirectUri;
-	if (ele_id == "header-option-add")
-		redirectUri = "https://apps.facebook.com/somanygifs/add";
-	else if (ele_id == "header-option-browse")
-		redirectUri = "https://apps.facebook.com/somanygifs/home";
-	else
-		redirectUri = FB_APP_CANVASPAGE;
-	top.location.href = "https://www.facebook.com/dialog/oauth?client_id="+FB_APP_ID+"&redirect_uri="+redirectUri;
+	if (FB_MODE == "external"){
+		showFbLogin();
+	}else{
+		var redirectUri;
+		if (ele_id == "header-option-add")
+			redirectUri = "https://apps.facebook.com/somanygifs/add";
+		else if (ele_id == "header-option-browse")
+			redirectUri = "https://apps.facebook.com/somanygifs/home";
+		else
+			redirectUri = FB_APP_CANVASPAGE;
+		top.location.href = "https://www.facebook.com/dialog/oauth?client_id="+FB_APP_ID+"&redirect_uri="+redirectUri;		
+	}
 }
 
 function GifListManager(gifs){
@@ -148,15 +211,6 @@ function GifListManager(gifs){
 
 function autoHideMessages(){
 	$("#server-message-container").delay(2500).fadeOut(2500);
-}
-
-function centerAbsoluteElements(){
-	$(".centered-elements").each(function(){
-		var ele = $(this);
-		var parent = $(this).parent();
-		var left = (parent.width() - ele.width())/2;
-		ele.css("left",left+"px");
-	});
 }
 
 function Gif(gifData, html){
