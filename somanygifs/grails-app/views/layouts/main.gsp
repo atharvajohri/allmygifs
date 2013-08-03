@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title><g:layoutTitle default="All My Gifs - The best collection of hilarious gifs you will ever find!"/></title>
+		<title><g:layoutTitle default="Hilarious collection of GIFs from all over the internet!"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
@@ -76,9 +76,9 @@
 			<div id="body-container" class="limit-width">
 				<g:layoutBody/>
 			</div>
-			<div id="footer-container" class="containers">
-				<div class="limit-width">
-					Developed and maintained by <b><a href="http://www.facebook.com/atharva.johri">Atharva Johri</a></b>
+			<div id="footer-container"x>
+				<div id="footer-content-container" class="limit-width">
+					
 				</div>
 			</div>
 		</div>

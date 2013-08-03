@@ -4,7 +4,7 @@ if (typeof jQuery !== 'undefined') {
 			centerAbsoluteElements();
 			autoHideMessages();
 			setupTipboxEvents();
-			setupFooter();
+//			setupFooter();
 			$(".login-triggers").click(function(e){
 				var ele_id = $(this).attr("id");
 				redirectToLogin(ele_id);
@@ -241,6 +241,8 @@ function showNextGif(prev, firstLoad){
 		currentGif = gifListManager.retrieveNextGif();
 		if (firstLoad){
 			$("#gif-viewport").html(currentGif.html);
+			$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
+			$("#body-container").css("height",($(window).height() * 525/768)+"px");
 			$("#gif-navigator-up").addClass("gif-navigator-disabled");
 			return;
 		}
@@ -261,9 +263,36 @@ function showNextGif(prev, firstLoad){
 		$("#gif-viewport").animate({"top":"0px"}, 200, "linear", function(){
 			$("#input-catcher").focus();
 			initializeKeyEvents(true);
+			setImageDimensions();
+			$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
 		});
 	});	
 	updateNavigatorClasses();
+}
+
+function setImageDimensions(){
+	var ele = $(".gif-image");
+	var curW = ele.width();
+	var curH = ele.height();
+	if (!curW || !curH){ //image has not loaded
+		setTimeout(function(){
+			setImageDimensions();
+		}, 300);
+	}
+	
+	var maxW = ($(window).width() * 385/1366), maxH = ($(window).height() * 400/768);
+	
+	if (curW > maxW){
+		ele.animate({"max-width":maxW+"px"}, 1, function(){
+			setImageDimensions();
+		})
+	}
+	
+	if (curH > maxH){
+		ele.animate({"max-height":maxH+"px"}, 1, function(){
+			setImageDimensions();
+		})
+	}
 }
 
 var gifListManager, curGifDate;
@@ -311,7 +340,7 @@ var tab = false;
 function initializeKeyEvents(turnOn){
 	if (turnOn){
 		//capture key events
-		$("#input-catcher, #gifs-container, .gif-navigators").off();
+		$("#input-catcher, #main-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
 			if (e.keyCode == 38 ||(e.keyCode == 9 && e.shiftKey)){
 				e.preventDefault();
@@ -341,7 +370,7 @@ function initializeKeyEvents(turnOn){
 		})
 		//capture scroll events
 		//Firefox
-		 $("#gifs-container").bind('DOMMouseScroll', function(e){
+		 $("#main-container").bind('DOMMouseScroll', function(e){
 		     if(e.originalEvent.detail > 0) {
 		    	 showNextGif();
 		     }else {
@@ -351,7 +380,7 @@ function initializeKeyEvents(turnOn){
 		 });
 	
 		 //IE, Opera, Safari
-		 $("#gifs-container").bind('mousewheel', function(e){
+		 $("#main-container").bind('mousewheel', function(e){
 		     if(e.originalEvent.wheelDelta < 0) {
 		    	 showNextGif();
 		     }else {
@@ -360,17 +389,17 @@ function initializeKeyEvents(turnOn){
 		     return false;
 		 });
 	}else{
-		$("#input-catcher, #gifs-container, .gif-navigators").off();
+		$("#input-catcher, #main-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
 			if (e.keyCode == 9 || (e.keyCode == 9 && e.shiftKey) || e.keyCode == 38 || e.keyCode == 40){
 				e.preventDefault();
 				e.stopPropagation();
 			}
 		});
-		$("#gifs-container").bind('DOMMouseScroll', function(e){
+		$("#main-container").bind('DOMMouseScroll', function(e){
 			return false;
 		});
-		$("#gifs-container").bind('mousewheel', function(e){
+		$("#main-container").bind('mousewheel', function(e){
 			return false;
 		});
 	}
