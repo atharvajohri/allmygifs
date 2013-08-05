@@ -2,17 +2,17 @@
 
 /* gif port styles */
 #gifs-container {overflow:hidden;position:relative;width:720px;border-right:1px solid #dedede;}
-	#gif-navigator {position:absolute;right:30px;top:150px;}
-		.gif-navigators {padding:5px 10px;border-radius:10px;border:1px solid #dedede;margin:5px;background:#fff;cursor:pointer}
-		.gif-navigators img {width:30px;opacity:0.7;}
+	#gif-navigator {float:left;position:relative;top:50px;}
+		.gif-navigators {padding:5px 5px;border-radius:10px;border:1px solid #dedede;margin:5px;background:#fff;cursor:pointer}
+		.gif-navigators img {width:15px;opacity:0.7;}
 		.gif-navigator-disabled {cursor:default;opacity:0.6}
-	#gif-viewport {overflow:hidden;position:relative;display:inline-block}
+	#gif-viewport {overflow:hidden;position:relative;display:inline-block;float:left}
 		.gif-container {padding:5px 10px;}
 			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a;}
 			.gif-content-container {}
 				.gif-image-container {overflow:hidden;width:385px;height:400px;}
 					.gif-image {background:#fff;border-left:5px solid #dedede;width:100%;}
 			.gif-info-container {font-size:15px;padding:5px 0px;overflow:auto;}
-
+	#comment-viewport {border-left:1px solid #dedede;padding:10px}
 
 

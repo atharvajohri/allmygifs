@@ -17,6 +17,9 @@
 					<img src="${resource(dir: 'images/icons', file: 'dArrow.jpg')}">
 				</div>
 			</div>
+			<div id="comments-viewport">
+			
+			</div>
 		</div>
 		<script>
 			$(document).ready(function(){
