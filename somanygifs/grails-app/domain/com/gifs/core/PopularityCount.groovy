@@ -6,7 +6,7 @@ class PopularityCount {
 
 	Date dateCreated
 	SecUser popularizedBy
-	Gif popularizedGif
-    static constraints = {
+    static enabled = true
+	static constraints = {
     }
 }

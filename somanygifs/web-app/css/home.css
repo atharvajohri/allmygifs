@@ -1,18 +1,29 @@
 /* style for home */
 
 /* gif port styles */
-#gifs-container {overflow:hidden;position:relative;width:720px;border-right:1px solid #dedede;}
+#gifs-container {overflow:hidden;position:relative;width:700px;border-right:1px solid #dedede;min-height:400px;}
 	#gif-navigator {float:left;position:relative;top:50px;}
 		.gif-navigators {padding:5px 5px;border-radius:10px;border:1px solid #dedede;margin:5px;background:#fff;cursor:pointer}
 		.gif-navigators img {width:15px;opacity:0.7;}
 		.gif-navigator-disabled {cursor:default;opacity:0.6}
-	#gif-viewport {overflow:hidden;position:relative;display:inline-block;float:left}
-		.gif-container {padding:5px 10px;}
-			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a;}
+	#gif-viewport {overflow:hidden;position:relative;display:inline-block;float:left;width:660px}
+		.gif-container {padding:5px 10px;float:left}
+			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a;visibility:hidden}
 			.gif-content-container {}
-				.gif-image-container {overflow:hidden;width:385px;height:400px;}
-					.gif-image {background:#fff;border-left:5px solid #dedede;width:100%;}
-			.gif-info-container {font-size:15px;padding:5px 0px;overflow:auto;}
-	#comment-viewport {border-left:1px solid #dedede;padding:10px}
+				.gif-image-container {overflow:hidden;width:385px;height:400px;border:1px solid #dedede}
+					.gif-image {background:#fff;border-left:5px solid #dedede;width:100%;visibility:hidden}
+				.gif-info-container {font-size:15px;padding:5px 0px;overflow:auto;}
+		.gif-comments-container {margin:10px;float:left;width:230px;height:400px;background:#eaeaea}
+			.gif-comments-header {margin:10px;padding:7px 0px;font-size:12px;font-weight:bold;overflow:auto;border-bottom:1px solid #dedede}
+				.gif-comments-sort {float:right;position:relative;top:-2px;font-size:10px}
+			.gif-comments-content {padding:10px;}
+				.gif-add-comment {}
+					.user-gif-comment {width:205px;margin:auto;font-family: Arial, sans-serif; font-size:12px; overflow:hidden;min-height: 56px;}
+					.hidden-comment {white-space: pre-wrap;width: 205px;min-height: 50px;font-family: Arial, sans-serif;font-size: 12px;word-wrap: break-word;display:none}
+					.gif-comment-tips {overflow:auto}
+						.gif-comment-tip {font-size:9px;color:#555;}	
+				.gif-comments-list {font-size:12px;padding:10px 0px;overflow-y:auto;height:230px;}
+					.gif-comment{background:#d5d5d5;padding:5px;font-size:11px;margin:5px 0px;border-radius:3px;}
+						.gif-commenter {font-weight:bold;font-size:12px;}
 
 

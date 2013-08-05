@@ -18,6 +18,14 @@ function setupFooter(){
 	$("#footer-container").css("width",width+"px");
 }
 
+function setupDOMEvents(){
+	initializeComments();
+	$(".gif-container").click(function(){
+		$("#input-catcher").focus();
+	});
+	$("#input-catcher").focus();
+}
+
 function setupTipboxEvents(){
 	$(".tip-text").hover(
 		function(){
@@ -31,12 +39,56 @@ function setupTipboxEvents(){
 
 var fb_redirect_url;
 
+function initializeComments(){
+	var txt = $('.user-gif-comment'), hiddenDiv = $(document.createElement('div')), content = null;
+	hiddenDiv.addClass('hidden-comment');
+	$('body').append(hiddenDiv);
+	
+	txt.on('keypress', function () {
+		if ($(this).val().length < 1000){
+		    content = $(this).val();
+		    content = content.replace(/\n/g, '<br>');
+		    hiddenDiv.html(content + '<br class="lbr">');
+		    $(this).css('height', hiddenDiv.height());
+		}
+	});
+
+	txt.on("keyup", function(){
+		$(".comment-char-count").html(1000 - $(this).val().length);
+	});
+	
+	$(".user-gif-comment").click(function(e){
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	$(".user-gif-comment").keydown(function(e){
+		if (e.ctrlKey && e.keyCode == 13){
+			console.log($(this).val() + ", " + $(this).attr("rel"))
+			postComment($(this).val(), $(this).attr("rel"));
+			$(this).val('');
+		}
+	});
+	$(".gif-comments-list").mCustomScrollbar();
+}
+
 function facebookLoginCallback(){
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
 			// logged in and connected user, someone you know
 			window.location ="/facebookLogin?redirect_to="+fb_redirect_url;
 		}
+	});
+}
+
+function postComment(commentText, id){
+	asyncLoader("/comment", "POST", {"comment":commentText, "id":id}, function(data){
+		console.log("success")
+		if (data.success){
+			$(".gif-comments-list").prepend(data.html)
+		}
+	}, function(data){
+		console.log("err")
+		console.log(data)
 	});
 }
 
@@ -171,30 +223,7 @@ function GifListManager(gifs){
 			    });
 			}
 		}
-/*Following is to load gifs synchronously */	
-/* this function ensures that all gifs are loaded 1 by 1. 
- * multiple requests are not sent to retrieve gifs, so each
- * one is retrieved faster. 
- * multiple requests can only be sent if user asks for next.
- */
-//		if (!index)
-//			index = 0;
-//		for (i in gifs){
-//			if (i==index){
-//				found = true;
-//				var curGif = gifs[i];
-//				$('<img/>', {
-//					'src': curGif.gifData.link, // url
-//					'load': function(){
-//						console.log (curGif.gifData.link + " has been loaded");
-//						curGif.gifLoaded = true;
-//						index++;
-//						self.loadGifImages(index);
-//					}
-//			    });
-//				break;
-//			}
-//		}
+
 		if (!found){
 			console.log("all gif images are loaded");
 		}
@@ -244,6 +273,7 @@ function showNextGif(prev, firstLoad){
 			$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
 			$("#body-container").css("height",($(window).height() * 525/768)+"px");
 			$("#gif-navigator-up").addClass("gif-navigator-disabled");
+			setupDOMEvents();
 			return;
 		}
 		position1 = positionTop;
@@ -264,6 +294,7 @@ function showNextGif(prev, firstLoad){
 			$("#input-catcher").focus();
 			initializeKeyEvents(true);
 			setImageDimensions();
+			setupDOMEvents();
 			$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
 		});
 	});	
@@ -340,7 +371,7 @@ var tab = false;
 function initializeKeyEvents(turnOn){
 	if (turnOn){
 		//capture key events
-		$("#input-catcher, #main-container, .gif-navigators").off();
+		$("#input-catcher, .gif-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
 			if (e.keyCode == 38 ||(e.keyCode == 9 && e.shiftKey)){
 				e.preventDefault();
@@ -370,7 +401,7 @@ function initializeKeyEvents(turnOn){
 		})
 		//capture scroll events
 		//Firefox
-		 $("#main-container").bind('DOMMouseScroll', function(e){
+		 $(".gif-container").bind('DOMMouseScroll', function(e){
 		     if(e.originalEvent.detail > 0) {
 		    	 showNextGif();
 		     }else {
@@ -380,7 +411,7 @@ function initializeKeyEvents(turnOn){
 		 });
 	
 		 //IE, Opera, Safari
-		 $("#main-container").bind('mousewheel', function(e){
+		 $(".gif-container").bind('mousewheel', function(e){
 		     if(e.originalEvent.wheelDelta < 0) {
 		    	 showNextGif();
 		     }else {
@@ -389,17 +420,17 @@ function initializeKeyEvents(turnOn){
 		     return false;
 		 });
 	}else{
-		$("#input-catcher, #main-container, .gif-navigators").off();
+		$("#input-catcher, .gif-container, .gif-navigators").off();
 		$("#input-catcher").keydown(function(e){
 			if (e.keyCode == 9 || (e.keyCode == 9 && e.shiftKey) || e.keyCode == 38 || e.keyCode == 40){
 				e.preventDefault();
 				e.stopPropagation();
 			}
 		});
-		$("#main-container").bind('DOMMouseScroll', function(e){
+		$(".gif-container").bind('DOMMouseScroll', function(e){
 			return false;
 		});
-		$("#main-container").bind('mousewheel', function(e){
+		$(".gif-container").bind('mousewheel', function(e){
 			return false;
 		});
 	}
@@ -435,3 +466,28 @@ function asyncLoader(url, type, data, successCallback, errorCallback){
 		}
 	})
 }
+
+/*Following is to load gifs synchronously */	
+/* this function ensures that all gifs are loaded 1 by 1. 
+ * multiple requests are not sent to retrieve gifs, so each
+ * one is retrieved faster. 
+ * multiple requests can only be sent if user asks for next.
+ */
+//		if (!index)
+//			index = 0;
+//		for (i in gifs){
+//			if (i==index){
+//				found = true;
+//				var curGif = gifs[i];
+//				$('<img/>', {
+//					'src': curGif.gifData.link, // url
+//					'load': function(){
+//						console.log (curGif.gifData.link + " has been loaded");
+//						curGif.gifLoaded = true;
+//						index++;
+//						self.loadGifImages(index);
+//					}
+//			    });
+//				break;
+//			}
+//		}

@@ -7,9 +7,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.mCustomScrollbar.css')}" type="text/css" />
 		<g:javascript library="jquery" plugin="jquery"></g:javascript>
 		<g:javascript library="application"/>
 		<g:javascript library="constants"/>
+		<g:javascript library="scrollbar"/>
 		<fbg:resources locale="${Locale.getDefault()}" />
 		<g:layoutHead/>
 		<r:layoutResources />

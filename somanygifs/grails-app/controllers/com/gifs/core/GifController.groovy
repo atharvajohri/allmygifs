@@ -4,6 +4,8 @@ import groovy.json.JsonSlurper
 import org.codehaus.groovy.grails.web.json.JSONObject
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
+import grails.plugins.springsecurity.SpringSecurityService;
+
 import org.codehaus.groovy.grails.commons.DefaultGrailsApplication
 import org.codehaus.groovy.grails.web.converters.ConverterUtil
 
@@ -61,10 +63,9 @@ class GifController {
 		def user = springSecurityService.getCurrentUser()
 		def likedGif = Gif.get(Long.parseLong(params.id.toString()))
 		if (!secUserService.isGifPopularizedByUser(likedGif, user)){
-			def popularityCount = new PopularityCount(popularizedBy: user, popularizedGif: likedGif)
+			def popularityCount = new PopularityCount(popularizedBy: user)
 			if (popularityCount.save(flush:true)){
 				//add pop to gif & user
-				user.addToPopularityCounts(popularityCount)
 				likedGif.addToPopularityCounts(popularityCount)
 				
 				returnData.updateAction = "unlike"
@@ -96,10 +97,8 @@ class GifController {
 		def unlikedGif = Gif.get(Long.parseLong(params.id.toString()))
 		def existingPopularityCount = secUserService.isGifPopularizedByUser(unlikedGif, user) 
 		if (existingPopularityCount){
-			user.removeFromPopularityCounts(existingPopularityCount)
 			unlikedGif.removeFromPopularityCounts(existingPopularityCount)
 			existingPopularityCount.delete()
-			
 			
 			returnData.success = true
 			returnData.updateAction = "like"
@@ -114,6 +113,25 @@ class GifController {
 		render returnData as JSON
 	}
 
+	@Secured(['IS_AUTHENTICATED_FULLY'])
+	def comment(){
+		log.info "request to add comment $params.comment $params.id"
+		def gif = Gif.get(Long.parseLong(params.id.toString()))
+		def user = springSecurityService.getCurrentUser()
+		def comment = new Comment(gif: gif, user: user, comment: params.comment )
+		def returnData = [:]
+		if (comment.save()){
+			gif.addToComments(comment)
+			returnData.success = true
+			returnData.html = gifService.renderComment(comment)
+		}else{
+			comment.errors.each {println it}
+			returnData.success = false
+		}
+		
+		render returnData as JSON
+	}
+	
 	@Secured(['ROLE_ADMIN'])
 	def addGif(){
 		def user = springSecurityService.getCurrentUser()

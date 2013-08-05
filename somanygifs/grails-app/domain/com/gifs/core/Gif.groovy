@@ -9,7 +9,7 @@ class Gif {
 	String title
 	SecUser addedBy
 	
-	static hasMany = [tags: Tag, popularityCounts: PopularityCount]
+	static hasMany = [tags: Tag, popularityCounts: PopularityCount, comments:Comment]
 	static belongsTo = SecUser
 	static enabled = true
 	

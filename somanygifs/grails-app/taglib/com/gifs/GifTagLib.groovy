@@ -6,6 +6,7 @@ class GifTagLib {
 
 	def springSecurityService
 	def secUserService
+	def gifService
 	
 	def showStats = { attrs ->
 		def gif = attrs.gif
@@ -44,6 +45,21 @@ class GifTagLib {
 				</div>
 			</div>
 		""" 
+		out << outString
+	}
+	
+	
+	def showComments = { attrs ->
+		def gif = attrs.gif
+		def outString = ""
+		if (gif.comments){
+			gif.comments.each { comment ->
+				outString += gifService.renderComment(comment)
+			}
+		}else{
+			outString += "<i>No comments yet</i>"
+		}
+		
 		out << outString
 	}
 }

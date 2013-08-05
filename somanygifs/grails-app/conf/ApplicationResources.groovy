@@ -6,4 +6,8 @@ modules = {
 	constants {
 		resource url:'js/constants.js'
 	}
+	
+	scrollbar {
+		resource url:'js/libs/jquery.mCustomScrollbar.concat.min.js'
+	}
 }
