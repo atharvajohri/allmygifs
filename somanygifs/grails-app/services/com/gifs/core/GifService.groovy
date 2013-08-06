@@ -6,7 +6,14 @@ class GifService {
 	def obtainGifPackage(params){
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 		params.gifDate = params.gifDate ? df.parse(params.gifDate.toString()) : new Date()
-		return Gif.findAllByDateCreatedLessThan(params.gifDate, [offset:Long.parseLong(params.offset.toString()), max:Long.parseLong(params.size.toString())])
+		def gifs = []
+		gifs.addAll(Gif.findAllByDateCreatedLessThan(params.gifDate, [offset:Long.parseLong(params.offset.toString()), max:Long.parseLong(params.size.toString())]))
+		if (params.id){
+			def requestedGif = Gif.get(Long.parseLong(params.id.toString()))
+			gifs = gifs - [requestedGif]
+			gifs = [requestedGif] + gifs
+		}
+		return gifs
 	}
 	
 	def renderComment(comment){
@@ -18,5 +25,9 @@ class GifService {
 		"""
 		
 		return outString
+	}
+	
+	def generateGifMapping(title){
+		return title.replaceAll(" ", "-")
 	}
 }

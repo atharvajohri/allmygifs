@@ -12,6 +12,7 @@ class UrlMappings {
 		"/home"(controller:"gif", action:"home")//(view:"/index")
 		"/comment"(controller:"gif", action:"comment")//(view:"/index")
 		"/facebookLogin"(controller:"secUser", action:"facebookLogin")//(view:"/index")
+		"/show/$id" (controller:"gif", action:"show")
 		"500"(view:'/error')
 	}
 }

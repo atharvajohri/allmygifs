@@ -12,6 +12,9 @@
 		<g:javascript library="application"/>
 		<g:javascript library="constants"/>
 		<g:javascript library="scrollbar"/>
+		<g:javascript library="actions"/>
+		<g:javascript library="gifs"/>
+		<g:javascript library="comments"/>
 		<fbg:resources locale="${Locale.getDefault()}" />
 		<g:layoutHead/>
 		<r:layoutResources />

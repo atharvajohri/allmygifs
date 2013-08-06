@@ -13,5 +13,6 @@ class Comment {
 	static belongsTo = Gif
 	
     static constraints = {
+		comment blank:false, maxSize:1024
     }
 }

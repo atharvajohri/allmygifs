@@ -30,6 +30,7 @@ class GifController {
 	}
 	
 	def home(){
+		[gifUrl: "/gif/getGif"]
 	}
 	
 	def getGif(){
@@ -132,10 +133,25 @@ class GifController {
 		render returnData as JSON
 	}
 	
+	def show(){
+		def gif;
+		if (params.id){
+			gif = Gif.findByUrlMapping(params.id.toString())
+			if (gif){
+				render view:"home", model:[gifUrl:"/gif/getGif/${gif.id}"]
+				return
+			}else{
+				render view:'/error'
+			}
+		}else{
+			render view:"home"
+		}
+	}
+	
 	@Secured(['ROLE_ADMIN'])
 	def addGif(){
 		def user = springSecurityService.getCurrentUser()
-		def gif = new Gif(addedBy:user, link:params.link, title:params.title)
+		def gif = new Gif(addedBy:user, link:params.link, title:params.title, urlMapping: gifService.generateGifMapping(params.title) )
 		if (gif.save()){
 			user.addToAddedGifs(gif)
 			flash.message = "Added a new gif successfully"

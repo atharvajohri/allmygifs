@@ -20,7 +20,7 @@
 		</div>
 		<script>
 			$(document).ready(function(){
-				initializeGifLoader("${createLink(controller:'gif', action:'getGif')}");
+				initializeGifLoader("${gifUrl}");
 			});
 		</script>	
 	</body>

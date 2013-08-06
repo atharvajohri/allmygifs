@@ -20,14 +20,14 @@
 <div class="gif-comments-container">
 	<div class="gif-comments-header">
 		Comments 
-		<div class="gif-comments-sort">
-			<table>
-				<tr>
-					<td>Top</td>
-					<td>Recent</td>
-				</tr>
-			</table>
-		</div>
+<%--		<div class="gif-comments-sort">--%>
+<%--			<table>--%>
+<%--				<tr>--%>
+<%--					<td>Top</td>--%>
+<%--					<td>Recent</td>--%>
+<%--				</tr>--%>
+<%--			</table>--%>
+<%--		</div>--%>
 	</div>
 	<div class="gif-comments-content">
 		<sec:ifLoggedIn>

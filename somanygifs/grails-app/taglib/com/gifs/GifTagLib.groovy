@@ -10,7 +10,7 @@ class GifTagLib {
 	
 	def showStats = { attrs ->
 		def gif = attrs.gif
-		def outString = "", likeButtonHtml = "", unlikeButtonHtml = "";
+		def outString = "", likeButtonHtml = "", unlikeButtonHtml = "", shareButtonHtml = "";
 		def user = springSecurityService.getCurrentUser()
 		if (user){
 			likeButtonHtml = g.remoteLink(controller:"gif", action:"unlikeGif", id:gif.id, onComplete:"handleLikeAction(XMLHttpRequest)", class:'like-link'){
@@ -27,21 +27,34 @@ class GifTagLib {
 				</div>
 			"""
 			}
+			shareButtonHtml = """
+				<div class="floatL share-button" onClick="shareGif()">
+					Share
+				</div>	
+			"""
 		}else{
 			//'${g.createLink(controller:'gif', action:'likeGif')}'
 			likeButtonHtml += """
-				<div class="like-unlike-button floatL" onClick="redirectToLogin()">
+				<div class="like-unlike-button floatL" onClick="redirectToLogin(null, '/show/${gif.urlMapping}')">
 					Like
 				</div>
 			"""
+			shareButtonHtml = """
+				<div class="floatL share-button" onClick="redirectToLogin(null, '/show/${gif.urlMapping}')">
+					Share
+				</div>	
+			"""
 		}
+		def likeCount = gif.popularityCounts.size()
 		outString += """
 			<div class="gif-stats-container">
 				${likeButtonHtml}
 				${unlikeButtonHtml}
+				<div class="separator floatL" style="visibility:hidden;margin-left:0px">|</div>
+				${shareButtonHtml}
 				<div class="separator floatL">|</div>
 				<div class="floatL gif-likes-count">
-					${gif.popularityCounts.size() } <span class="smaller-text-80">likes</span>
+					${likeCount} <span class="smaller-text-80">${likeCount == 1 ? 'like' : 'likes'}</span>
 				</div>
 			</div>
 		""" 
@@ -53,11 +66,13 @@ class GifTagLib {
 		def gif = attrs.gif
 		def outString = ""
 		if (gif.comments){
-			gif.comments.each { comment ->
+			gif.comments.sort {a,b-> 
+				b.dateCreated<=>a.dateCreated
+			}.each { comment ->
 				outString += gifService.renderComment(comment)
 			}
 		}else{
-			outString += "<i>No comments yet</i>"
+			outString += "<span class='no-comments'><i>No comments yet</i></span>"
 		}
 		
 		out << outString
