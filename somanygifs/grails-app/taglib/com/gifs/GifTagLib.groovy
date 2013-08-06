@@ -13,16 +13,17 @@ class GifTagLib {
 		def outString = "", likeButtonHtml = "", unlikeButtonHtml = "", shareButtonHtml = "";
 		def user = springSecurityService.getCurrentUser()
 		if (user){
+			def popularityCount = secUserService.isGifPopularizedByUser(gif, user)
 			likeButtonHtml = g.remoteLink(controller:"gif", action:"unlikeGif", id:gif.id, onComplete:"handleLikeAction(XMLHttpRequest)", class:'like-link'){
 				"""
-				<div class="unlike-button like-unlike-button floatL ${secUserService.isGifPopularizedByUser(gif, user) ? '' : 'hide'}">
+				<div class="unlike-button like-unlike-button floatL ${popularityCount ? '' : 'hide'}">
 					Unlike
 				</div>
 			"""
 			}
 			unlikeButtonHtml = g.remoteLink(controller:"gif", action:"likeGif", id:gif.id, onComplete:"handleLikeAction(XMLHttpRequest)", class:'like-link'){
 			"""
-				<div class="like-button like-unlike-button floatL ${secUserService.isGifPopularizedByUser(gif, user) ? 'hide' : ''}">
+				<div class="like-button like-unlike-button floatL ${popularityCount ? 'hide' : ''}">
 					Like
 				</div>
 			"""

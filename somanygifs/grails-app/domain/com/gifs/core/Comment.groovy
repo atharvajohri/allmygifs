@@ -15,4 +15,8 @@ class Comment {
     static constraints = {
 		comment blank:false, maxSize:1024
     }
+	
+	static mapping = {
+		sort dateCreated:"desc"
+	}
 }

@@ -5,7 +5,7 @@
 	</div>
 	<div class="gif-content-container">
 		<div class="gif-image-container">
-			<img src="${gif.link }" class="gif-image">
+			<img src="${gif.link.encodeAsHTML() }" class="gif-image">
 		</div>
 		<div class="gif-info-container">
 			<div class="gif-likes floatL">

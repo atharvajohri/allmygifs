@@ -119,6 +119,9 @@ class GifController {
 		log.info "request to add comment $params.comment $params.id"
 		def gif = Gif.get(Long.parseLong(params.id.toString()))
 		def user = springSecurityService.getCurrentUser()
+		def previousComment = Comment.findAllByUserAndGif(user, gif, [max:1])[0]
+		log.info previousComment
+		
 		def comment = new Comment(gif: gif, user: user, comment: params.comment )
 		def returnData = [:]
 		if (comment.save()){

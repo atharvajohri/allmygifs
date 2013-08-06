@@ -8,7 +8,7 @@
 		.gif-navigator-disabled {cursor:default;opacity:0.6}
 	#gif-viewport {overflow:hidden;position:relative;display:inline-block;float:left;width:660px}
 		.gif-container {padding:5px 10px;float:left}
-			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a;visibility:hidden}
+			.gif-title-container {margin:10px 0px;font-weight:bold;font-size:20px;color:#5a5a5a;}
 			.gif-content-container {}
 				.gif-image-container {overflow:hidden;width:385px;height:400px;border:1px solid #dedede}
 					.gif-image {background:#fff;border-left:5px solid #dedede;width:100%;visibility:hidden}

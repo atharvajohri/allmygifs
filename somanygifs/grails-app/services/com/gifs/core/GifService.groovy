@@ -19,8 +19,8 @@ class GifService {
 	def renderComment(comment){
 		def outString = """
 			<div class="gif-comment">
-				<span class="gif-commenter"><a href="http://www.facebook.com/${comment.user.username}">${comment.user.name ?: comment.user.username}</a></span>
-				${comment.comment}
+				<span class="gif-commenter"><a href="http://www.facebook.com/${comment.user.username.encodeAsHTML()}">${comment.user.name.encodeAsHTML() ?: comment.user.username.encodeAsHTML()}</a></span>
+				${comment.comment.encodeAsHTML()}
 			</div>
 		"""
 		
@@ -28,6 +28,6 @@ class GifService {
 	}
 	
 	def generateGifMapping(title){
-		return title.replaceAll(" ", "-")
+		return title.encodeAsHTML().replaceAll(" ", "-")
 	}
 }

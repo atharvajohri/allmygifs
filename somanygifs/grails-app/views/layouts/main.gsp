@@ -47,7 +47,7 @@
 		<div id="main-container">
 			<g:if test="${flash.message }">
 				<div id="server-message-container" class="containers centered-elements">
-					${flash.message}
+					${flash.message.encodeAsHTML()}
 				</div>
 			</g:if>
 			<div id="header-container">
@@ -83,7 +83,21 @@
 			</div>
 			<div id="footer-container"x>
 				<div id="footer-content-container" class="limit-width">
-					
+					<div class="floatL">
+						<div class="fb-like" data-href="http://allmygifs.in/" data-width="300" data-show-faces="true" data-send="false"></div>
+					</div>
+					<div class="floatR">
+						<div class="footer-links">
+							<table class="footer-links-table">
+								<tr>
+									<td>Contact</td>
+									<td>About</td>
+									<td>Contribute</td>
+									<td><b>PaperRose Productions</b></td>
+								</tr>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

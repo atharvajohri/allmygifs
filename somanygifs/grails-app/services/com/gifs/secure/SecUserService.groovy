@@ -43,8 +43,8 @@ class SecUserService {
 	
 	def isGifPopularizedByUser(gif, user){
 		def popularityCount = null;
-		user.popularityCounts.each{ pc ->
-			if (pc.enabled && pc.popularizedGif == gif){
+		gif.popularityCounts.each{ pc ->
+			if (pc.enabled && (pc.popularizedBy.id == user.id)){
 				popularityCount = pc;
 				return;
 			}
