@@ -22,6 +22,8 @@ class Gif {
 	
 	static mapping = {
 		sort dateCreated:"desc"
+		popularityCounts lazy:false, cascade:"all,delete-orphan"
+		comments lazy:false, cascade:"all,delete-orphan"
 	}
 	
 }

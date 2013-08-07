@@ -46,10 +46,13 @@
 		</div>
 		<div id="main-container">
 			<g:if test="${flash.message }">
-				<div id="server-message-container" class="containers centered-elements">
+				<div id="server-message-container" class="containers centered-elements message-containers">
 					${flash.message.encodeAsHTML()}
 				</div>
 			</g:if>
+			<div id="custom-message-container" class="containers centered-elements message-containers">
+			
+			</div>
 			<div id="header-container">
 				<div class="limit-width">
 					<div id="logo-container">
@@ -83,7 +86,7 @@
 			</div>
 			<div id="footer-container"x>
 				<div id="footer-content-container" class="limit-width">
-					<div class="floatL">
+					<div class="floatL footer-like-container">
 						<div class="fb-like" data-href="http://allmygifs.in/" data-width="300" data-show-faces="true" data-send="false"></div>
 					</div>
 					<div class="floatR">

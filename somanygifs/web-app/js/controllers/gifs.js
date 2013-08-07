@@ -121,9 +121,8 @@ function showNextGif(prev, firstLoad){
 		if (firstLoad){
 			$("#gif-viewport").html(currentGif.html);
 			currentGif.comments = $("#gif-viewport .gif-comments-list .mCSB_container").html();
-			$("#body-container").css("height",($(window).height() * 525/768)+"px");
 			$("#gif-navigator-up").addClass("gif-navigator-disabled");
-			setupDOMEvents();
+			setupDOMEvents(firstLoad);
 			return;
 		}
 		position1 = positionTop;
@@ -142,10 +141,13 @@ function showNextGif(prev, firstLoad){
 		$("#gif-viewport").css({"top":position2});
 		$("#gif-viewport").animate({"top":"0px"}, 200, "linear", function(){
 			setTimeout(function(){
-				if (currentGif.comments)
+				if (currentGif.comments){
 					$(".gif-comments-list .mCSB_container").html(currentGif.comments);
+					$(".no-comments").hide();
+				}
 				else
 					currentGif.comments = $(".gif-comments-list .mCSB_container").html();
+				initializeCommentDelete();
 			}, 10);
 			$("#input-catcher").focus();
 			initializeKeyEvents(true);

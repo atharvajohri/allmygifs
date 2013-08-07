@@ -70,7 +70,7 @@ class GifTagLib {
 			gif.comments.sort {a,b-> 
 				b.dateCreated<=>a.dateCreated
 			}.each { comment ->
-				outString += gifService.renderComment(comment)
+				outString += gifService.renderComment(comment, springSecurityService.getCurrentUser() ? (springSecurityService.getCurrentUser().id == comment.user.id) : false)
 			}
 		}else{
 			outString += "<span class='no-comments'><i>No comments yet</i></span>"

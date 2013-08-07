@@ -68,7 +68,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-		grails.serverURL = "http://54.213.123.26/"
+		grails.serverURL = "http://allmygifs.in/"
     }
 }
 

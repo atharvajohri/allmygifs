@@ -68,12 +68,9 @@ class GifController {
 			if (popularityCount.save(flush:true)){
 				//add pop to gif & user
 				likedGif.addToPopularityCounts(popularityCount)
-				
 				returnData.updateAction = "unlike"
 				returnData.success = true
-				returnData.gifLikes = likedGif.popularityCounts.size()
-				returnData.gifId = likedGif.id
-				log.info "gif ${likedGif.id} liked successfully by ${user.id} \n users likes are ${user.popularityCounts}"
+				log.info "gif ${likedGif.id} liked successfully by ${user.id}"
 			} else{
 				popularityCount.errors.each {
 					println it
@@ -85,9 +82,11 @@ class GifController {
 		}else{
 			log.info "gif already liked"
 			returnData.success = true
+			returnData.updateAction = "unlike"
 			returnData.message = "Gif is already liked"
 		}
-		
+		returnData.gifLikes = likedGif.popularityCounts.size()
+		returnData.gifId = likedGif.id
 		render returnData as JSON
 	}
 	
@@ -96,21 +95,19 @@ class GifController {
 		def returnData = [:]
 		def user = springSecurityService.getCurrentUser()
 		def unlikedGif = Gif.get(Long.parseLong(params.id.toString()))
-		def existingPopularityCount = secUserService.isGifPopularizedByUser(unlikedGif, user) 
+		def existingPopularityCount = secUserService.isGifPopularizedByUser(unlikedGif, user)
 		if (existingPopularityCount){
 			unlikedGif.removeFromPopularityCounts(existingPopularityCount)
-			existingPopularityCount.delete()
-			
 			returnData.success = true
 			returnData.updateAction = "like"
-			returnData.gifLikes = unlikedGif.popularityCounts.size()
-			returnData.gifId = unlikedGif.id
-			log.info "gif ${unlikedGif.id} liked successfully by ${user.id} \n users likes are ${user.popularityCounts}"
+			log.info "gif ${unlikedGif.id} unliked successfully by ${user.id} "
 		}else{
 			returnData.success = true
+			returnData.updateAction = "like"
 			returnData.message = "Gif is not liked"
 		}
-		
+		returnData.gifLikes = unlikedGif.popularityCounts.size()
+		returnData.gifId = unlikedGif.id
 		render returnData as JSON
 	}
 
@@ -119,20 +116,48 @@ class GifController {
 		log.info "request to add comment $params.comment $params.id"
 		def gif = Gif.get(Long.parseLong(params.id.toString()))
 		def user = springSecurityService.getCurrentUser()
-		def previousComment = Comment.findAllByUserAndGif(user, gif, [max:1])[0]
-		log.info previousComment
-		
-		def comment = new Comment(gif: gif, user: user, comment: params.comment )
 		def returnData = [:]
-		if (comment.save()){
-			gif.addToComments(comment)
-			returnData.success = true
-			returnData.html = gifService.renderComment(comment)
+		if (!gifService.isCommentSpam(gif, user)){
+			def comment = new Comment(gif: gif, user: user, comment: params.comment )
+			if (comment.save()){
+				gif.addToComments(comment)
+				returnData.success = true
+				returnData.html = gifService.renderComment(comment, (springSecurityService.getCurrentUser() ? springSecurityService.getCurrentUser().id == comment.user.id : false))
+			}else{
+				comment.errors.each {println it}
+				returnData.success = false
+			}
 		}else{
-			comment.errors.each {println it}
 			returnData.success = false
+			returnData.message = "You can comment only once in two minutes"
 		}
-		
+		render returnData as JSON
+	}
+	
+	@Secured(['IS_AUTHENTICATED_FULLY'])
+	def commentDelete(){
+		log.info "request to delete comment $params.id"
+		def user = springSecurityService.getCurrentUser()
+		def comment = Comment.get(Long.parseLong(params.id.toString()))
+		def returnData = [:]
+		if (comment){
+			def gif = comment.gif
+			if (comment.user.id == user.id){
+				def commentId = comment.id
+				gif.removeFromComments(comment)
+				log.info "delete complete"
+				returnData.success = true
+				returnData.selector = "#comment-${gif.id}-${user.id}-${commentId}"
+			}else{
+				log.info "delete unauth"
+				returnData.success = false
+				returnData.message = "Unauthorized"
+			}
+		}else{
+		log.info "delete already"
+			returnData.success = true
+			returnData.message = "Comment does not exist"
+		}
 		render returnData as JSON
 	}
 	

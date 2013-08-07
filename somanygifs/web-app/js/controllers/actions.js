@@ -14,15 +14,23 @@ function asyncLoader(url, type, data, successCallback, errorCallback){
 	})
 }
 
+function showCustomMessage(message){
+	$("#custom-message-container").html(message).stop().fadeIn(200).fadeOut(2500);
+}
+
 function handleLikeAction(xhr){
 	console.log (xhr)
 	if (xhr.status == 401){
 		redirectToLogin();
 	}else if (xhr.status == 200){
 		var response = $.parseJSON(xhr.responseText);
-		console.log(response)
+		if (response.message){
+			showCustomMessage(response.message)
+		}
 		if (response.success){
-			$("#gif-"+response.gifId+" .gif-likes-count").html(response.gifLikes + (response.gifLikes == 1 ? " like" : " likes"));
+			if (response.gifLikes != undefined && response.gifLikes != null){
+				$("#gif-"+response.gifId+" .gif-likes-count").html(response.gifLikes + (response.gifLikes == 1 ? " like" : " likes"));
+			}
 			$(".like-unlike-button").addClass("hide");
 			$("#gif-"+response.gifId+" ."+response.updateAction+"-button").removeClass("hide");
 		}else{

@@ -18,9 +18,10 @@ function setupFooter(){
 	$("#footer-container").css("width",width+"px");
 }
 
-function setupDOMEvents(){
+function setupDOMEvents(firstLoad){
 	initializeComments();
-	$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
+//	$("#body-container").css("height",($(window).height() * 525/768)+"px");
+//	$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
 	$(".gif-comments-container").css("height", ($(".gif-image-container").height()+80) + "px");
 	$(".gif-comments-list").css("height", ($(".gif-image-container").height()-75) + "px");
 	$(".gif-container").click(function(){
