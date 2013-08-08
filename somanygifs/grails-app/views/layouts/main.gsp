@@ -93,10 +93,9 @@
 						<div class="footer-links">
 							<table class="footer-links-table">
 								<tr>
-									<td>Contact</td>
-									<td>About</td>
-									<td>Contribute</td>
-									<td><b>PaperRose Productions</b></td>
+									<td>
+										<b>PaperRose Productions</b>
+									</td>
 								</tr>
 							</table>
 						</div>

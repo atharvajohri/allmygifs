@@ -5,10 +5,12 @@ if (typeof jQuery !== 'undefined') {
 			autoHideMessages();
 			setupTipboxEvents();
 //			setupFooter();
+			$("#body-container").css("min-height",($(window).height() - $("#header-container").height() - $("#footer-container").height() - 40)+"px"); //update 40 as top bottom padding
 			$(".login-triggers").click(function(e){
 				var ele_id = $(this).attr("id");
 				redirectToLogin(ele_id);
 			});
+			$("#input-catcher").focus();
 		});
 	})(jQuery);
 }
@@ -20,6 +22,7 @@ function setupFooter(){
 
 function setupDOMEvents(firstLoad){
 	initializeComments();
+	tab = false;
 //	$("#body-container").css("height",($(window).height() * 525/768)+"px");
 //	$(".gif-image-container").css("height",($(window).height() * 397/768)+"px");
 	$(".gif-comments-container").css("height", ($(".gif-image-container").height()+80) + "px");

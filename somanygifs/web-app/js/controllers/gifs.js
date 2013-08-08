@@ -123,6 +123,7 @@ function showNextGif(prev, firstLoad){
 			currentGif.comments = $("#gif-viewport .gif-comments-list .mCSB_container").html();
 			$("#gif-navigator-up").addClass("gif-navigator-disabled");
 			setupDOMEvents(firstLoad);
+			$("#gifs-container").css("height", $("#gifs-container").height() + "px");
 			return;
 		}
 		position1 = positionTop;
