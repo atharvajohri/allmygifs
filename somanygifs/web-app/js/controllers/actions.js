@@ -105,6 +105,8 @@ function showFbLogin(){
 
 function redirectToLogin(ele_id, redirectUrl){
 	if (FB_MODE == "external"){
+		if (ele_id == "header-option-add")
+			redirectUrl = "/add";
 		if (redirectUrl)
 			fb_redirect_url = redirectUrl;  
 		showFbLogin();

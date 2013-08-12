@@ -12,7 +12,7 @@ class Gif {
 	
 	static hasMany = [tags: Tag, popularityCounts: PopularityCount, comments:Comment]
 	static belongsTo = SecUser
-	static enabled = true
+	Boolean enabled = true
 	
     static constraints = {
 		link nullable:false, blank:false, url:true, maxSize:250

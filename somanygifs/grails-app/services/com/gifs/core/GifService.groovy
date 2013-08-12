@@ -5,10 +5,11 @@ import java.text.SimpleDateFormat
 class GifService {
 	
 	def obtainGifPackage(params){
+		log.info "requested for a packet of gifs: \nm: $params.max \no: $params.offset \nd: $params.gifDate"
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 		params.gifDate = params.gifDate ? df.parse(params.gifDate.toString()) : new Date()
 		def gifs = []
-		gifs.addAll(Gif.findAllByDateCreatedLessThan(params.gifDate, [offset:Long.parseLong(params.offset.toString()), max:Long.parseLong(params.size.toString())]))
+		gifs.addAll(Gif.findAllByEnabledAndDateCreatedLessThan(true, params.gifDate, [offset:Long.parseLong(params.offset.toString()), max:Long.parseLong(params.size.toString())]))
 		if (params.id){
 			def requestedGif = Gif.get(Long.parseLong(params.id.toString()))
 			gifs = gifs - [requestedGif]

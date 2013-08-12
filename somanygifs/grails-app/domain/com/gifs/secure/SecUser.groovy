@@ -13,6 +13,7 @@ class SecUser {
 	String password
 	String name
 	boolean enabled = true
+	boolean isSupervisor = false
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired

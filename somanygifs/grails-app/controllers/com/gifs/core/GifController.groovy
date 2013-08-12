@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService;
-
+import com.gifs.secure.SecUser
 import org.codehaus.groovy.grails.commons.DefaultGrailsApplication
 import org.codehaus.groovy.grails.web.converters.ConverterUtil
 
@@ -53,9 +53,35 @@ class GifController {
 		}
 	}
 	
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
 	def add(){
 		request.message = flash.message ?: null
+		
+		[user: springSecurityService.getCurrentUser()]
+	}
+	
+	@Secured(['ROLE_ADMIN'])
+	def manager = {
+		
+	}
+	
+	def gifList = {
+		def user = springSecurityService.getCurrentUser()
+		if (user && user.isSupervisor){
+			[gifs: Gif.list([max:(params.max ?: 10), offset:(params.offset ?: 0)]), gifCount: Gif.count()]
+		}else{
+			if (user){
+				flash.message = "You are not a supervisor"
+				redirect uri:"/home"
+			}else{
+				redirect uri:"/login"
+			}
+		}
+	}
+	
+	@Secured(['ROLE_ADMIN'])
+	def userList = {
+		[users: SecUser.list([max:(params.max ?: 10), offset:(params.offset ?: 0)]), userCount: SecUser.count()]
 	}
 	
 	@Secured(['IS_AUTHENTICATED_FULLY'])

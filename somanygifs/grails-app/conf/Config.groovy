@@ -98,6 +98,7 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.gifs.secure.SecUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.gifs.secure.SecUserSecRole'
 grails.plugins.springsecurity.authority.className = 'com.gifs.secure.SecRole'
+//grails.plugins.springsecurity.roleHierarchy = "ROLE_ADMIN > ROLE_SUPERVISOR > ROLE_USER"
 //TODO:force all connections over secure channel
 //grails.plugins.springsecurity.secureChannel.definition = [
 //	'*':         'REQUIRES_SECURE_CHANNEL',
