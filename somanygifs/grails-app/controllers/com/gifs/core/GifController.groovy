@@ -33,6 +33,17 @@ class GifController {
 		[gifUrl: "/gif/getGif"]
 	}
 	
+	def extractGif = {
+		log.info "params are \n $params"
+		new ExtractedGifs(src:params.src, setId: params.setId).save(flush:true)
+		def extractedGifs = [];
+		if (params.last){
+			extractedGifs = ExtractedGifs.findAllBySetId(params.setId)
+			log.info "saved last gif"
+		}
+		[last:params.last, src:params.src, setId:params.setId, extractedGifs: extractedGifs]
+	}
+	
 	def getGif(){
 		params.type = params.type ?: "JSON"
 		

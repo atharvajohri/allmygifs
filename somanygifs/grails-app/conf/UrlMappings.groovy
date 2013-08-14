@@ -11,6 +11,7 @@ class UrlMappings {
 		"/add"(controller:"gif", action:"add")//(view:"/index")
 		"/home"(controller:"gif", action:"home")//(view:"/index")
 		"/comment"(controller:"gif", action:"comment")//(view:"/index")
+		"/extractor"(controller:"gif", action:"extractGif")
 		"/commentDelete"(controller:"gif", action:"commentDelete")
 		"/facebookLogin"(controller:"secUser", action:"facebookLogin")//(view:"/index")
 		"/show/$id" (controller:"gif", action:"show")
